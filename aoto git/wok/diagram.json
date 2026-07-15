@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "author": "Dwi Bakti N Dev / Roy",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 135, "left": 28.2, "attrs": {} },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd",
+      "top": -89.6,
+      "left": 168.8,
+      "attrs": { "pins": "i2c" }
+    },
+    { "type": "wokwi-mpu6050", "id": "mpu", "top": 253.42, "left": 347.92, "attrs": {} }
+  ],
+  "connections": [
+    [ "lcd:VCC", "uno:5V", "red", [ "v0" ] ],
+    [ "lcd:GND", "uno:GND.1", "black", [ "v0" ] ],
+    [ "lcd:SDA", "uno:A4", "green", [ "v0" ] ],
+    [ "lcd:SCL", "uno:A5", "blue", [ "v0" ] ],
+    [ "mpu:VCC", "uno:5V", "red", [ "v0" ] ],
+    [ "mpu:GND", "uno:GND.2", "black", [ "v0" ] ],
+    [ "mpu:SDA", "uno:A4", "green", [ "v0" ] ],
+    [ "mpu:SCL", "uno:A5", "blue", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}

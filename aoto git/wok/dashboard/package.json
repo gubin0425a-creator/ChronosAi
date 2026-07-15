@@ -1,0 +1,15 @@
+{
+  "name": "wokwi-prayer-dashboard",
+  "version": "1.0.0",
+  "description": "Prayer movement monitor dashboard connected to Wokwi simulation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author" : "SholatMotion",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}

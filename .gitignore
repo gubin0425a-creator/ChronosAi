@@ -1,0 +1,7 @@
+.meta-panel-trigger
+meta.bat
+**/node_modules/
+**/.pio/
+**/.vscode/
+**/.cache/
+**/compile_commands.json

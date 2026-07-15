@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SholatMotion Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="icon/icon.ico">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Amiri:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    .prayer-anim-wrapper::after {
+      display: none !important;
+    }
+
+    #prayerPoseImg {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      transition: opacity 0.15s ease-in-out;
+    }
+  </style>
+</head>
+<link rel="stylesheet" href="css/main.css">
+
+<body>
+  <!-- Google Login Screen -->
+  <div id="google-login-screen">
+    <div class="login-card">
+      <div class="brand-logo" style="width: 64px; height: 64px; font-size: 32px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center;"><img src="icon/icon.png" alt="SholatMotion Logo" style="border-radius:50%;" width="64" height="64"></div>
+      <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">Sholat<span style="color:var(--google-blue);">Motion</span></h2>
+      <p style="color: var(--md-sys-color-outline); font-size: 14px; margin-bottom: 32px; line-height: 1.5; text-align: center;">
+        실시간 동작 모니터링 및 스마트 가이드 시스템.<br>Google 계정으로 로그인하여 시작하세요.
+      </p>
+      
+      <!-- Custom Google Sign-In Button -->
+      <button id="btn-google-login" class="g-signin-btn">
+        <svg class="g-logo" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        <span>Google 계정으로 로그인</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Google OAuth Account Picker Modal -->
+  <div id="google-oauth-modal" class="modal-oauth-overlay" style="display: none;">
+    <div class="modal-oauth-card">
+      <div class="oauth-header">
+        <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 8px;">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        <h3 style="font-size: 22px; font-weight: 500; margin-bottom: 4px;">계정 선택</h3>
+        <p style="font-size: 14px; margin-bottom: 16px;"><span style="color: var(--google-blue); font-weight: 500;">SholatMotion</span>으로 이동</p>
+      </div>
+      
+      <div id="oauth-loading" style="display: none; padding: 32px 0; text-align: center;">
+        <div class="oauth-spinner"></div>
+        <p style="font-size: 13px; color: var(--md-sys-color-outline); margin-top: 16px;">안전하게 로그인하는 중...</p>
+      </div>
+      
+      <div id="oauth-account-list">
+        <div class="oauth-account-item" data-name="김구빈" data-email="gubin.kim@gmail.com" data-pic="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop">
+          <img class="oauth-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" alt="Avatar">
+          <div class="oauth-details">
+            <span class="oauth-name">김구빈</span>
+            <span class="oauth-email">gubin.kim@gmail.com</span>
+          </div>
+        </div>
+        <div class="oauth-account-item" data-name="Guest Dev" data-email="guest.dev@google.com" data-pic="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&h=100&fit=crop">
+          <img class="oauth-avatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&h=100&fit=crop" alt="Avatar">
+          <div class="oauth-details">
+            <span class="oauth-name">Guest Dev</span>
+            <span class="oauth-email">guest.dev@google.com</span>
+          </div>
+        </div>
+        
+        <div class="oauth-use-another">
+          <span class="material-symbols-outlined" style="font-size: 20px; color: var(--md-sys-color-outline);">account_circle</span>
+          <span>다른 계정 사용</span>
+        </div>
+      </div>
+      
+      <div class="oauth-footer">
+        도움을 받으려면 Google 계정 로그인을 계속하세요. 이용 약관 및 개인정보 보호정책을 확인하세요.
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="brand">
+      <div class="brand-logo"><img src="icon/icon.png" alt="SholatMotion Logo" style="border-radius:50%;" width="40"
+          height="40"></div>
+      <div class="brand-title">Sholat<span>Motion</span></div>
+    </div>
+    <div class="header-actions">
+      <div id="statusBadge" class="status-badge disconnected">
+        <div class="status-dot"></div>
+        <span id="statusText">Terputus</span>
+      </div>
+      <button class="icon-btn" id="themeToggleBtn" title="Ganti Tema">
+        <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div id="tab-dashboard" class="tab-content active">
+      <div class="dashboard-grid">
+        <div class="dashboard-col">
+          <div class="card" style="align-items:center; text-align:center;">
+            <div class="card-title" style="width:100%;">
+              <span class="material-symbols-outlined">person</span> Monitoring Sholat
+            </div>
+            <div id="poseText" style="font-size:28px; font-weight:700; color:var(--google-blue); margin:10px 0;">
+              Menunggu Koneksi...</div>
+            <div class="prayer-anim-wrapper">
+              <img id="prayerPoseImg" src="sajada/takbit.png" alt="Gerakan Sholat">
+            </div>
+
+            <div class="bacaan-container" id="bacaanContainer" style="display:none;">
+              <div class="bacaan-arab" id="bacaanArab"></div>
+              <div class="bacaan-latin" id="bacaanLatin"></div>
+              <div class="bacaan-arti" id="bacaanArti"></div>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:15px; width:100%;">
+              <div class="metric-card" style="flex:1; text-align:center;">
+                <div class="metric-meta">Sudut Pitch</div>
+                <div class="metric-main" id="pitchVal" style="font-size:22px;">0.0°</div>
+              </div>
+              <div class="metric-card" style="flex:1; text-align:center;">
+                <div class="metric-meta">Transisi</div>
+                <div class="metric-main" id="counterText" style="font-size:22px;">0</div>
+              </div>
+              <div class="metric-card" style="flex:1; text-align:center;">
+                <div class="metric-meta">Status</div>
+                <div class="metric-main" id="stabilityText" style="font-size:18px; color:var(--google-yellow);">-</div>
+              </div>
+            </div>
+            <div class="audio-toggle-container" style="margin-top:20px; width:100%; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size:14px; font-weight:500;">Panduan Suara</span>
+                <span id="voice-lock-badge" class="material-symbols-outlined" style="font-size: 16px; color: var(--md-sys-color-outline); display: none; vertical-align: middle;">lock</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="voiceGuideToggle">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-col">
+          <div class="card" style="margin-bottom:24px;">
+            <div class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--google-green)">analytics</span> Statistik
+              Sholat (Sesi Ini)
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Estimasi Rakaat</div>
+                <div class="metric-main" id="statRakaat">0</div>
+              </div>
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Total Sujud</div>
+                <div class="metric-main" id="statSujud">0</div>
+              </div>
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Waktu Aktif</div>
+                <div class="metric-main" id="statWaktu">00:00</div>
+              </div>
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Kualitas Gerakan</div>
+                <div class="metric-main" id="statKualitas" style="color:var(--google-green); font-size:18px;">Baik</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span class="material-symbols-outlined">history</span> Riwayat Gerakan
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Waktu</th>
+                    <th>Gerakan</th>
+                    <th>Sudut</th>
+                  </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                  <tr id="emptyHistoryRow">
+                    <td colspan="3" style="text-align:center; color:var(--md-sys-color-outline);">Belum ada data...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="tab-quran" class="tab-content">
+      <!-- Quran Lock Overlay -->
+      <div id="quran-lock-overlay" class="locked-overlay" style="display: none;">
+        <span class="material-symbols-outlined lock-icon">lock</span>
+        <h3>Al-Quran Locked</h3>
+        <p>Standard 또는 Premium 플랜을 사용하여 Al-Quran을 읽어보세요.</p>
+        <button class="btn btn-primary btn-go-settings" style="margin-top: 10px;">설정으로 이동</button>
+      </div>
+      <div id="quran-list-panel">
+        <div class="quran-header" style="text-align:center; margin-bottom:16px;">
+          <h2 style="font-size:24px; font-weight:600; margin-bottom:8px;">Baca Al-Quran</h2>
+          <p style="color:var(--md-sys-color-outline)">Pilih surah untuk mulai membaca</p>
+        </div>
+        <div class="search-box">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" id="quran-search" placeholder="Cari nama surah...">
+        </div>
+        <div class="surah-grid" id="surahGrid">
+          <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--md-sys-color-outline);">Memuat
+            daftar surah...</div>
+        </div>
+      </div>
+      <div id="quran-reader-panel" style="display:none;">
+        <button class="btn btn-secondary" id="btnBackToQuranList" style="margin-bottom:20px;">
+          <span class="material-symbols-outlined">arrow_back</span> Kembali
+        </button>
+        <div class="quran-reader-header">
+          <h2 id="readerSurahName">Al-Fatihah</h2>
+          <p id="readerSurahDesc">Pembuka • 7 Ayat • Makkiyah</p>
+        </div>
+        <div id="versesContainer"></div>
+      </div>
+    </div>
+    <div id="tab-tasbih" class="tab-content">
+      <!-- Tasbih Lock Overlay -->
+      <div id="tasbih-lock-overlay" class="locked-overlay" style="display: none;">
+        <span class="material-symbols-outlined lock-icon">lock</span>
+        <h3>Tasbih Digital & Time Locked</h3>
+        <p>Standard 또는 Premium 플랜을 사용하여 Tasbih 및 시간 기능을 사용해 보세요.</p>
+        <button class="btn btn-primary btn-go-settings" style="margin-top: 10px;">설정으로 이동</button>
+      </div>
+      <div class="dashboard-grid">
+        <div class="dashboard-col">
+          <div class="card" style="align-items:center; text-align:center;">
+            <div class="card-title" style="width:100%;">
+              <span class="material-symbols-outlined" style="color:var(--google-blue)">fingerprint</span> Tasbih Digital
+            </div>
+            <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; justify-content:center;">
+              <button class="btn btn-secondary target-btn active" data-target="33">33x</button>
+              <button class="btn btn-secondary target-btn" data-target="99">99x</button>
+              <button class="btn btn-secondary target-btn" data-target="100">100x</button>
+              <button class="btn btn-secondary target-btn" data-target="0">∞</button>
+            </div>
+            <div
+              style="position:relative; width:220px; height:220px; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+              <svg width="220" height="220" style="position:absolute; transform:rotate(-90deg);">
+                <circle cx="110" cy="110" r="100" fill="none" stroke="var(--md-sys-color-surface-variant)"
+                  stroke-width="8" />
+                <circle id="tasbihProgress" cx="110" cy="110" r="100" fill="none" stroke="var(--md-sys-color-primary)"
+                  stroke-width="8" stroke-linecap="round" stroke-dasharray="628.31" stroke-dashoffset="628.31" />
+              </svg>
+              <div>
+                <div id="tasbihCount"
+                  style="font-size:64px; font-weight:700; color:var(--md-sys-color-primary); line-height:1;">0</div>
+                <div id="tasbihTargetLabel" style="font-size:16px; color:var(--md-sys-color-outline);">dari 33</div>
+              </div>
+            </div>
+            <div id="tasbihDzikirText"
+              style="font-size:20px; font-weight:600; margin-bottom:25px; color:var(--md-sys-color-on-surface);">
+              سُبْحَانَ اللهِ</div>
+            <div style="display:flex; gap:16px; align-items:center;">
+              <button class="btn btn-secondary" id="btnResetTasbih">
+                <span class="material-symbols-outlined">replay</span>
+              </button>
+              <button id="btnTapTasbih"
+                style="width:90px; height:90px; border-radius:50%; background-color:var(--md-sys-color-primary); color:var(--md-sys-color-on-primary); border:none; box-shadow:0 4px 12px rgba(0,0,0,0.2); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.1s ease;">
+                <span class="material-symbols-outlined" style="font-size:40px;">touch_app</span>
+              </button>
+              <button class="btn btn-secondary" id="btnSaveTasbih">
+                <span class="material-symbols-outlined">save</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--google-red)">schedule</span> Jam & Waktu Sholat
+            </div>
+            <div style="text-align:center; margin-bottom:16px;">
+              <div id="liveClock"
+                style="font-size:48px; font-weight:700; font-variant-numeric:tabular-nums; color:var(--md-sys-color-on-surface);">
+                00:00:00</div>
+              <div id="liveDate" style="font-size:14px; color:var(--md-sys-color-outline);">Memuat...</div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Subuh</div>
+                <div class="metric-main" style="font-size:18px;">04:35</div>
+              </div>
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Dzuhur</div>
+                <div class="metric-main" style="font-size:18px;">11:50</div>
+              </div>
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Ashar</div>
+                <div class="metric-main" style="font-size:18px;">15:15</div>
+              </div>
+              <div class="metric-card" style="text-align:center;">
+                <div class="metric-meta">Maghrib</div>
+                <div class="metric-main" style="font-size:18px;">18:05</div>
+              </div>
+              <div class="metric-card" style="text-align:center; grid-column:span 2;">
+                <div class="metric-meta">Isya'</div>
+                <div class="metric-main" style="font-size:18px;">19:15</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-col">
+          <div class="card">
+            <div class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--google-yellow)">wb_sunny</span> Dzikir Pagi &
+              Malam
+            </div>
+            <div style="display:flex; gap:10px; margin-bottom:16px;">
+              <button class="btn btn-primary dzikir-tab-btn active" data-dzikir="pagi">☀️ Pagi</button>
+              <button class="btn btn-secondary dzikir-tab-btn" data-dzikir="malam">🌙 Malam</button>
+            </div>
+            <div id="dzikirListContainer"
+              style="display:flex; flex-direction:column; gap:12px; max-height:450px; overflow-y:auto; padding-right:8px;">
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--google-green)">history</span> Riwayat Tasbih
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Waktu</th>
+                    <th>Dzikir</th>
+                    <th>Jumlah</th>
+                  </tr>
+                </thead>
+                <tbody id="tasbihHistoryBody">
+                  <tr id="emptyTasbihHistoryRow">
+                    <td colspan="3" style="text-align:center; color:var(--md-sys-color-outline);">Belum ada riwayat</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="tab-gallery" class="tab-content">
+      <!-- Gallery Lock Overlay -->
+      <div id="gallery-lock-overlay" class="locked-overlay" style="display: none;">
+        <span class="material-symbols-outlined lock-icon">lock</span>
+        <h3>Gallery Locked</h3>
+        <p>Premium 플랜을 사용하여 이슬람 사원 갤러리를 구경해 보세요.</p>
+        <button class="btn btn-primary btn-go-settings" style="margin-top: 10px;">설정으로 이동</button>
+      </div>
+      <div class="gallery-container">
+        <div style="text-align:center; margin-bottom:16px;">
+          <h2 style="font-size:24px; font-weight:600; margin-bottom:8px;">Galeri Foto Masjid Dunia</h2>
+          <p style="color:var(--md-sys-color-outline)">Keindahan arsitektur masjid</p>
+        </div>
+        <div class="search-box">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" id="gallery-search" placeholder="Cari foto masjid (misal: Mosque Turkey)...">
+          <button class="btn btn-primary" id="btnSearchGallery"
+            style="border-radius:10px; padding:6px 16px; margin-left:8px;">Cari</button>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <div id="loadMoreSentinel" class="load-more-sentinel"></div>
+      </div>
+    </div>
+    
+    <div id="tab-settings" class="tab-content">
+      <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+        <div class="dashboard-col">
+          <!-- Google Account Profile Card -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--google-blue)">account_circle</span> Google 계정 정보 (Google Account)
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; width: 100%;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <img id="user-profile-pic" src="" alt="Profile" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--md-sys-color-surface-variant);">
+                <div>
+                  <h3 id="user-profile-name" style="font-size: 16px; font-weight: 600; margin: 0;">-</h3>
+                  <p id="user-profile-email" style="font-size: 13px; color: var(--md-sys-color-outline); margin: 2px 0 0 0;">-</p>
+                </div>
+              </div>
+              <button class="btn btn-secondary" id="btn-google-logout" style="border-radius: 12px; padding: 10px 20px;">로그아웃</button>
+            </div>
+          </div>
+
+          <!-- Developer Authentication Card -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--google-blue)">key</span> 개발자 인증 (Developer Authentication)
+            </div>
+            <p style="font-size: 14px; color: var(--md-sys-color-outline); margin-bottom: 16px;">
+              개발자 라이센스 키를 등록하면 모든 플랜(Free, Standard, Premium)을 자유롭게 변경하고 테스트할 수 있는 <strong>6개월 권한</strong>이 부여됩니다.
+            </p>
+            
+            <div id="auth-input-container" style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; width: 100%;">
+              <input type="text" id="license-key-input" placeholder="라이센스 키를 입력하세요 (예: DEV-6M-PASS)" 
+                     style="flex: 1; min-width: 250px; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--md-sys-color-surface-variant); background: var(--md-sys-color-background); color: var(--md-sys-color-on-surface); font-family: inherit; font-size: 15px; outline: none;">
+              <button class="btn btn-primary" id="btn-auth-license" style="padding: 12px 24px; border-radius: 12px; height: 46px;">인증하기</button>
+            </div>
+            
+            <div id="auth-status-container" style="display: none; background: var(--google-green-container); border: 1.5px solid var(--google-green); padding: 16px; border-radius: 16px; margin-bottom: 16px; align-items: center; justify-content: space-between; width: 100%;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="material-symbols-outlined" style="color: var(--google-green-text); font-size: 28px;">verified_user</span>
+                <div>
+                  <div style="font-weight: 600; color: var(--google-green-text); font-size: 16px;">개발자 6개월 권한 활성화됨</div>
+                  <div id="license-expiry-date" style="font-size: 13px; color: var(--google-green-text); opacity: 0.85; margin-top: 2px;">만료일: -</div>
+                </div>
+              </div>
+              <button class="btn btn-secondary" id="btn-deauth-license" style="border-radius: 10px; padding: 6px 12px; font-size: 12px;">인증 해제</button>
+            </div>
+            
+            <div id="auth-error-msg" style="display: none; color: var(--md-sys-color-error); font-size: 13px; font-weight: 500; margin-top: -8px; margin-bottom: 16px;">
+              올바르지 않은 라이센스 키입니다. 다시 입력해주세요. (Tip: DEV-6M-PASS)
+            </div>
+          </div>
+
+          <!-- Plan Selection Card -->
+          <div class="card">
+            <div class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--google-yellow)">workspace_premium</span> 플랜 설정 (Plan Settings)
+            </div>
+            <p style="font-size: 14px; color: var(--md-sys-color-outline); margin-bottom: 20px;">
+              원하는 플랜을 선택하여 대시보드 및 서비스 권한을 다르게 설정할 수 있습니다. (6개월 개발자 권한이 있어야 변경 가능)
+            </p>
+            
+            <div id="plan-selection-group" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; width: 100%;">
+              <!-- Free Plan Card -->
+              <div class="plan-card" id="plan-card-free" data-plan="free">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-weight: 600; font-size: 16px;">Free Plan (무료)</span>
+                  <span class="material-symbols-outlined plan-check" style="font-size: 20px; color: var(--google-green); display: none;">check_circle</span>
+                </div>
+                <div style="font-size: 12px; color: var(--md-sys-color-outline); line-height: 1.5; margin-bottom: 12px;">
+                  기본 대시보드 모니터링만 제공됩니다. (Quran, Tasbih, Gallery 탭 잠금)
+                </div>
+                <div style="font-weight: 700; font-size: 18px; color: var(--md-sys-color-on-surface);">무료</div>
+              </div>
+              
+              <!-- Standard Plan Card -->
+              <div class="plan-card" id="plan-card-standard" data-plan="standard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-weight: 600; font-size: 16px;">Standard Plan</span>
+                  <span class="material-symbols-outlined plan-check" style="font-size: 20px; color: var(--google-green); display: none;">check_circle</span>
+                </div>
+                <div style="font-size: 12px; color: var(--md-sys-color-outline); line-height: 1.5; margin-bottom: 12px;">
+                  Al-Quran 및 Tasbih 디지털 기능이 잠금 해제됩니다. (Gallery 탭 및 음성 안내 잠금)
+                </div>
+                <div style="font-weight: 700; font-size: 18px; color: var(--md-sys-color-on-surface);">₩ 4,900 <span style="font-size: 11px; font-weight: normal; color: var(--md-sys-color-outline);">/ 월</span></div>
+              </div>
+              
+              <!-- Premium Plan Card -->
+              <div class="plan-card" id="plan-card-premium" data-plan="premium">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-weight: 600; font-size: 16px;">Premium Plan</span>
+                  <span class="material-symbols-outlined plan-check" style="font-size: 20px; color: var(--google-green); display: none;">check_circle</span>
+                </div>
+                <div style="font-size: 12px; color: var(--md-sys-color-outline); line-height: 1.5; margin-bottom: 12px;">
+                  음성 안내(Panduan Suara) 및 갤러리를 포함한 모든 기능이 해제됩니다.
+                </div>
+                <div style="font-weight: 700; font-size: 18px; color: var(--md-sys-color-on-surface);">₩ 9,900 <span style="font-size: 11px; font-weight: normal; color: var(--md-sys-color-outline);">/ 월</span></div>
+              </div>
+            </div>
+            
+            <div id="plan-lock-warning" style="margin-top: 16px; display: flex; align-items: center; gap: 8px; color: var(--google-red);">
+              <span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
+              <span style="font-size: 13px; font-weight: 500;">개발자 인증이 비활성화 상태이므로 플랜을 변경할 수 없습니다. (먼저 개발자 인증을 하세요)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="modal" id="lightboxModal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="btnModalClose"><span class="material-symbols-outlined">close</span></button>
+      <img id="modalImg" class="modal-img" src="" alt="Full mosque image">
+      <div class="modal-details">
+        <h3 id="modalPhotographer" style="font-size:18px; font-weight:600;">Fotografer</h3>
+        <p id="modalDesc" style="font-size:13px; color:var(--md-sys-color-outline);">Keterangan foto</p>
+        <a id="modalPexelsUrl" href="" target="_blank"
+          style="font-size:12px; color:var(--google-blue); font-weight:600; text-decoration:none;"></a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active" data-tab="tab-dashboard"><span
+        class="material-symbols-outlined">dashboard</span>Dashboard</div>
+    <div class="nav-item" data-tab="tab-quran"><span class="material-symbols-outlined">menu_book</span>Al-Quran</div>
+    <div class="nav-item" data-tab="tab-tasbih"><span class="material-symbols-outlined">fingerprint</span>Tasbih</div>
+    <div class="nav-item" data-tab="tab-gallery"><span class="material-symbols-outlined">gallery_thumbnail</span>Galeri</div>
+    <div class="nav-item" data-tab="tab-settings"><span class="material-symbols-outlined">settings</span>설정</div>
+  </div>
+
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="js/scene3d.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

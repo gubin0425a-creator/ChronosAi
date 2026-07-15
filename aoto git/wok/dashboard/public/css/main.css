@@ -1,0 +1,1434 @@
+    :root {
+      --md-sys-color-primary: #0b57d0;
+      --md-sys-color-primary-container: #d3e3fd;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-on-primary-container: #041e49;
+      --md-sys-color-secondary: #00639b;
+      --md-sys-color-background: #f8fafd;
+      --md-sys-color-surface: #ffffff;
+      --md-sys-color-surface-variant: #e1e2ec;
+      --md-sys-color-on-surface: #1f1f1f;
+      --md-sys-color-on-surface-variant: #44474e;
+      --md-sys-color-outline: #74777f;
+      --md-sys-color-error: #ba1a1a;
+
+      --google-blue: #1a73e8;
+      --google-red: #ea4335;
+      --google-yellow: #fbbc05;
+      --google-green: #34a853;
+      --google-green-container: #e6f4ea;
+      --google-green-text: #137333;
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+      --shadow-1: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+      --shadow-2: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+    }
+
+    .dark-theme {
+      --md-sys-color-primary: #a8c7fa;
+      --md-sys-color-primary-container: #0842a0;
+      --md-sys-color-on-primary: #062e70;
+      --md-sys-color-on-primary-container: #d3e3fd;
+      --md-sys-color-secondary: #7fcfff;
+      --md-sys-color-background: #0f1115;
+      --md-sys-color-surface: #1a1c22;
+      --md-sys-color-surface-variant: #44474e;
+      --md-sys-color-on-surface: #e3e3e3;
+      --md-sys-color-on-surface-variant: #c4c6d0;
+      --md-sys-color-outline: #8e9099;
+
+      --google-green-container: #137333;
+      --google-green-text: #e6f4ea;
+
+      --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+      --shadow-2: 0 4px 8px 3px rgba(0, 0, 0, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-surface);
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background-color: var(--md-sys-color-surface);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background-color var(--transition-normal);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      background-color: var(--google-blue);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-title span {
+      color: var(--google-blue);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      background-color: var(--md-sys-color-surface-variant);
+    }
+
+    .status-badge.connected {
+      background-color: var(--google-green-container);
+      color: var(--google-green-text);
+    }
+
+    .status-badge.connecting {
+      background-color: #fef7e0;
+      color: #b06000;
+    }
+
+    .status-badge.disconnected {
+      background-color: #fce8e6;
+      color: #c5221f;
+    }
+
+    .dark-theme .status-badge.connecting {
+      background-color: #5f4a00;
+      color: #fdd663;
+    }
+
+    .dark-theme .status-badge.disconnected {
+      background-color: #5f1a1a;
+      color: #f28b82;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--md-sys-color-outline);
+    }
+
+    .connected .status-dot {
+      background-color: var(--google-green);
+      animation: pulse 1.5s infinite;
+    }
+
+    .connecting .status-dot {
+      background-color: var(--google-yellow);
+      animation: pulse 1s infinite;
+    }
+
+    .disconnected .status-dot {
+      background-color: var(--google-red);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.9);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0.9);
+        opacity: 0.6;
+      }
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      color: var(--md-sys-color-on-surface);
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--transition-fast);
+    }
+
+    .icon-btn:hover {
+      background-color: var(--md-sys-color-surface-variant);
+    }
+
+    main {
+      padding: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: tabFadeIn 0.4s ease forwards;
+    }
+
+    @keyframes tabFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background-color: var(--md-sys-color-surface);
+      box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+      border-top: 1px solid var(--md-sys-color-surface-variant);
+      transition: background-color var(--transition-normal);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--md-sys-color-on-surface-variant);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      flex-grow: 1;
+      height: 100%;
+      cursor: pointer;
+      gap: 4px;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-item.active {
+      color: var(--google-blue);
+    }
+
+    .nav-item .material-symbols-outlined {
+      font-size: 24px;
+      transition: transform var(--transition-fast);
+    }
+
+    .nav-item.active .material-symbols-outlined {
+      transform: scale(1.15);
+      font-variation-settings: 'FILL' 1;
+    }
+
+    @media (min-width: 768px) {
+      .bottom-nav {
+        max-width: 500px;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+        border-radius: 32px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--md-sys-color-surface-variant);
+      }
+    }
+
+    /* Grid & Cards */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dashboard-col {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-1);
+      transition: box-shadow var(--transition-fast), background-color var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-2);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .card-title span.material-symbols-outlined {
+      font-size: 22px;
+      color: var(--google-blue);
+    }
+
+    .metric-card {
+      background-color: var(--md-sys-color-background);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background-color var(--transition-normal);
+    }
+
+    .metric-meta {
+      font-size: 13px;
+      color: var(--md-sys-color-outline);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .metric-main {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    /* Buttons & Toggles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 9px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-secondary {
+      background-color: var(--md-sys-color-surface-variant);
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--md-sys-color-outline);
+      color: white;
+    }
+
+    .btn-primary {
+      background-color: var(--google-blue);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 52px;
+      height: 28px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--md-sys-color-outline);
+      transition: .3s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: var(--google-green);
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      max-height: 250px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--md-sys-color-surface-variant);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--md-sys-color-surface-variant);
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--md-sys-color-on-surface-variant);
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      padding: 12px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--md-sys-color-surface-variant);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .badge-sholat {
+      background-color: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
+
+    .badge-angle {
+      background-color: var(--md-sys-color-surface-variant);
+      color: var(--md-sys-color-on-surface-variant);
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    /* Quran */
+    .search-box {
+      display: flex;
+      align-items: center;
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--radius-md);
+      padding: 6px 16px;
+      border: 1.5px solid var(--md-sys-color-surface-variant);
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-1);
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      flex-grow: 1;
+      height: 38px;
+      font-size: 16px;
+      color: var(--md-sys-color-on-surface);
+      font-family: inherit;
+    }
+
+    .search-box span {
+      color: var(--md-sys-color-outline);
+      margin-right: 8px;
+    }
+
+    .surah-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+    }
+
+    .surah-card {
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-1);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 1.5px solid transparent;
+    }
+
+    .surah-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+      border-color: var(--google-blue);
+    }
+
+    .surah-info-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .surah-num-badge {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .surah-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .surah-name-ind {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .surah-desc-ind {
+      font-size: 12px;
+      color: var(--md-sys-color-outline);
+    }
+
+    .surah-name-ara {
+      font-family: 'Amiri', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--google-blue);
+    }
+
+    .quran-reader-header {
+      background: linear-gradient(135deg, var(--google-blue), var(--md-sys-color-secondary));
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .quran-reader-header h2 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .quran-reader-header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .verse-item {
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 4px solid var(--google-blue);
+    }
+
+    .verse-number {
+      font-weight: 700;
+      color: var(--md-sys-color-outline);
+      font-size: 13px;
+    }
+
+    .verse-text {
+      font-family: 'Amiri', serif;
+      font-size: 28px;
+      line-height: 2.2;
+      text-align: right;
+      color: var(--md-sys-color-on-surface);
+      word-wrap: break-word;
+    }
+
+    .verse-translation {
+      font-size: 15px;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.6;
+    }
+
+    /* Gallery & Infinity Scroll */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-card {
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      position: relative;
+      aspect-ratio: 4/3;
+    }
+
+    .gallery-card:hover {
+      transform: scale(1.03);
+      box-shadow: var(--shadow-2);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-normal);
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+      padding: 16px 12px 12px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .gallery-card:hover .gallery-info {
+      opacity: 1;
+    }
+
+    .photographer-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .photo-desc {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    .load-more-sentinel {
+      height: 50px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--md-sys-color-outline);
+      font-size: 14px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      animation: tabFadeIn 0.3s ease;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--transition-fast);
+    }
+
+    .modal-close-btn:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      background-color: #000;
+    }
+
+    .modal-details {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* =========================================
+       PRAYER ANIMATION CSS (Geometric Figure)
+       ========================================= */
+    .prayer-anim-wrapper {
+      width: 100%;
+      height: 280px;
+      background-color: var(--md-sys-color-background);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 10px 0;
+      border: 1px solid var(--md-sys-color-surface-variant);
+      overflow: hidden;
+    }
+
+    /* Garis Lantai */
+    .prayer-anim-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: 20px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background-color: var(--md-sys-color-surface-variant);
+      border-radius: 4px;
+    }
+
+    .prayer-reading {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface-variant);
+      margin: 5px 0 10px 0;
+      min-height: 24px;
+      padding: 6px 12px;
+      background-color: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .prayer-figure {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      /* figure diposisikan di atas lantai */
+      transform-origin: center bottom;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Bagian Tubuh */
+    .prayer-figure > div {
+      position: absolute;
+      background-color: var(--google-blue);
+      border-radius: 20px;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: top center;
+    }
+
+    .pf-head {
+      width: 24px;
+      height: 24px;
+      border-radius: 50% !important;
+      left: 48px;
+      top: 0;
+    }
+
+    .pf-torso {
+      width: 16px;
+      height: 48px;
+      left: 52px;
+      top: 26px;
+    }
+
+    .pf-arm-right, .pf-arm-left {
+      width: 8px;
+      height: 40px;
+      top: 28px;
+    }
+    .pf-arm-right { left: 42px; background-color: var(--md-sys-color-secondary); }
+    .pf-arm-left { left: 70px; }
+
+    .pf-leg-right, .pf-leg-left {
+      width: 10px;
+      height: 50px;
+      top: 72px;
+    }
+    .pf-leg-right { left: 48px; background-color: var(--md-sys-color-secondary); }
+    .pf-leg-left { left: 62px; }
+
+    /* =========================================
+       POSE CLASSES
+       ========================================= */
+
+    /* 1. Berdiri */
+    .pose-berdiri .pf-head { transform: translate(0, 0); }
+    .pose-berdiri .pf-torso { transform: rotate(0deg); }
+    .pose-berdiri .pf-arm-right { transform: rotate(45deg) translate(5px, 5px); height: 30px; }
+    .pose-berdiri .pf-arm-left { transform: rotate(-45deg) translate(-5px, 5px); height: 30px; }
+    .pose-berdiri .pf-leg-right { transform: rotate(0deg); }
+    .pose-berdiri .pf-leg-left { transform: rotate(0deg); }
+
+    /* 2. Ruku' */
+    .pose-ruku .pf-torso { transform: rotate(90deg) translate(-20px, -20px); }
+    .pose-ruku .pf-head { transform: translate(45px, 20px); }
+    .pose-ruku .pf-arm-right { transform: rotate(15deg) translate(25px, -15px); height: 45px; }
+    .pose-ruku .pf-arm-left { transform: rotate(-15deg) translate(-10px, -25px); height: 45px; }
+    .pose-ruku .pf-leg-right { transform: rotate(0deg); }
+    .pose-ruku .pf-leg-left { transform: rotate(0deg); }
+
+    /* 3. Sujud */
+    .pose-sujud { transform: translate(20px, 35px); }
+    .pose-sujud .pf-torso { transform: rotate(110deg) translate(-25px, -15px); }
+    .pose-sujud .pf-head { transform: translate(65px, 45px); }
+    .pose-sujud .pf-arm-right { transform: rotate(120deg) translate(-10px, -45px); height: 35px; }
+    .pose-sujud .pf-arm-left { transform: rotate(80deg) translate(15px, -60px); height: 35px; }
+    .pose-sujud .pf-leg-right { transform: rotate(90deg) translate(-20px, 30px); height: 40px; }
+    .pose-sujud .pf-leg-left { transform: rotate(90deg) translate(-20px, 20px); height: 40px; }
+
+    /* 4. Duduk / Tasyahud */
+    .pose-duduk { transform: translate(0, 30px); }
+    .pose-duduk .pf-torso { transform: rotate(0deg); }
+    .pose-duduk .pf-head { transform: translate(0, 0); }
+    .pose-duduk .pf-arm-right { transform: rotate(20deg) translate(-10px, 5px); height: 40px; }
+    .pose-duduk .pf-arm-left { transform: rotate(-20deg) translate(10px, 5px); height: 40px; }
+    .pose-duduk .pf-leg-right { transform: rotate(90deg) translate(-20px, 30px); height: 40px; }
+    .pose-duduk .pf-leg-left { transform: rotate(90deg) translate(-20px, 20px); height: 40px; }
+
+    /* Transisi */
+    /* Sajadah */
+    .sajadah {
+      position: absolute;
+      bottom: 12px;
+      width: 140px;
+      height: 10px;
+      background: var(--google-green);
+      border-radius: 4px;
+      border-bottom: 4px solid var(--google-green-text);
+      z-index: 0;
+    }
+    .prayer-figure > div {
+      z-index: 1;
+    }
+
+    /* Bacaan Container */
+    .bacaan-container {
+      background: var(--md-sys-color-surface-variant);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      margin-top: 16px;
+      text-align: center;
+      width: 100%;
+      border: 1px solid var(--md-sys-color-outline);
+    }
+    .bacaan-arab {
+      font-family: 'Amiri', serif;
+      font-size: 28px;
+      color: var(--google-blue);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .bacaan-latin {
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--transition-fast);
+    }
+
+    .modal-close-btn:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      background-color: #000;
+    }
+
+    .modal-details {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* =========================================
+       PRAYER ANIMATION CSS (Geometric Figure)
+       ========================================= */
+    .prayer-anim-wrapper {
+      width: 100%;
+      height: 280px;
+      background-color: var(--md-sys-color-background);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 10px 0;
+      border: 1px solid var(--md-sys-color-surface-variant);
+      overflow: hidden;
+    }
+
+    /* Garis Lantai */
+    .prayer-anim-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: 20px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background-color: var(--md-sys-color-surface-variant);
+      border-radius: 4px;
+    }
+
+    .prayer-reading {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface-variant);
+      margin: 5px 0 10px 0;
+      min-height: 24px;
+      padding: 6px 12px;
+      background-color: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .prayer-figure {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      /* figure diposisikan di atas lantai */
+      transform-origin: center bottom;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Bagian Tubuh */
+    .prayer-figure > div {
+      position: absolute;
+      background-color: var(--google-blue);
+      border-radius: 20px;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: top center;
+    }
+
+    .pf-head {
+      width: 24px;
+      height: 24px;
+      border-radius: 50% !important;
+      left: 48px;
+      top: 0;
+    }
+
+    .pf-torso {
+      width: 16px;
+      height: 48px;
+      left: 52px;
+      top: 26px;
+    }
+
+    .pf-arm-right, .pf-arm-left {
+      width: 8px;
+      height: 40px;
+      top: 28px;
+    }
+    .pf-arm-right { left: 42px; background-color: var(--md-sys-color-secondary); }
+    .pf-arm-left { left: 70px; }
+
+    .pf-leg-right, .pf-leg-left {
+      width: 10px;
+      height: 50px;
+      top: 72px;
+    }
+    .pf-leg-right { left: 48px; background-color: var(--md-sys-color-secondary); }
+    .pf-leg-left { left: 62px; }
+
+    /* =========================================
+       POSE CLASSES
+       ========================================= */
+
+    /* 1. Berdiri */
+    .pose-berdiri .pf-head { transform: translate(0, 0); }
+    .pose-berdiri .pf-torso { transform: rotate(0deg); }
+    .pose-berdiri .pf-arm-right { transform: rotate(45deg) translate(5px, 5px); height: 30px; }
+    .pose-berdiri .pf-arm-left { transform: rotate(-45deg) translate(-5px, 5px); height: 30px; }
+    .pose-berdiri .pf-leg-right { transform: rotate(0deg); }
+    .pose-berdiri .pf-leg-left { transform: rotate(0deg); }
+
+    /* 2. Ruku' */
+    .pose-ruku .pf-torso { transform: rotate(90deg) translate(-20px, -20px); }
+    .pose-ruku .pf-head { transform: translate(45px, 20px); }
+    .pose-ruku .pf-arm-right { transform: rotate(15deg) translate(25px, -15px); height: 45px; }
+    .pose-ruku .pf-arm-left { transform: rotate(-15deg) translate(-10px, -25px); height: 45px; }
+    .pose-ruku .pf-leg-right { transform: rotate(0deg); }
+    .pose-ruku .pf-leg-left { transform: rotate(0deg); }
+
+    /* 3. Sujud */
+    .pose-sujud { transform: translate(20px, 35px); }
+    .pose-sujud .pf-torso { transform: rotate(110deg) translate(-25px, -15px); }
+    .pose-sujud .pf-head { transform: translate(65px, 45px); }
+    .pose-sujud .pf-arm-right { transform: rotate(120deg) translate(-10px, -45px); height: 35px; }
+    .pose-sujud .pf-arm-left { transform: rotate(80deg) translate(15px, -60px); height: 35px; }
+    .pose-sujud .pf-leg-right { transform: rotate(90deg) translate(-20px, 30px); height: 40px; }
+    .pose-sujud .pf-leg-left { transform: rotate(90deg) translate(-20px, 20px); height: 40px; }
+
+    /* 4. Duduk / Tasyahud */
+    .pose-duduk { transform: translate(0, 30px); }
+    .pose-duduk .pf-torso { transform: rotate(0deg); }
+    .pose-duduk .pf-head { transform: translate(0, 0); }
+    .pose-duduk .pf-arm-right { transform: rotate(20deg) translate(-10px, 5px); height: 40px; }
+    .pose-duduk .pf-arm-left { transform: rotate(-20deg) translate(10px, 5px); height: 40px; }
+    .pose-duduk .pf-leg-right { transform: rotate(90deg) translate(-20px, 30px); height: 40px; }
+    .pose-duduk .pf-leg-left { transform: rotate(90deg) translate(-20px, 20px); height: 40px; }
+
+    /* Transisi */
+    /* Sajadah */
+    .sajadah {
+      position: absolute;
+      bottom: 12px;
+      width: 140px;
+      height: 10px;
+      background: var(--google-green);
+      border-radius: 4px;
+      border-bottom: 4px solid var(--google-green-text);
+      z-index: 0;
+    }
+    .prayer-figure > div {
+      z-index: 1;
+    }
+
+    /* Bacaan Container */
+    .bacaan-container {
+      background: var(--md-sys-color-surface-variant);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      margin-top: 16px;
+      text-align: center;
+      width: 100%;
+      border: 1px solid var(--md-sys-color-outline);
+    }
+    .bacaan-arab {
+      font-family: 'Amiri', serif;
+      font-size: 28px;
+      color: var(--google-blue);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .bacaan-latin {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--md-sys-color-on-surface);
+      margin-bottom: 6px;
+    }
+    .bacaan-arti {
+      font-size: 13px;
+      color: var(--md-sys-color-outline);
+      font-style: italic;
+    }
+
+    /* =========================================
+       LOCKED OVERLAY & PLAN CARDS
+       ========================================= */
+    .tab-content {
+      position: relative;
+    }
+
+    .locked-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      transition: opacity var(--transition-normal);
+    }
+
+    .dark-theme .locked-overlay {
+      background: rgba(26, 28, 34, 0.88);
+    }
+
+    .locked-overlay .lock-icon {
+      font-size: 64px;
+      color: var(--google-red);
+      margin-bottom: 16px;
+      animation: lockPulse 2s infinite ease-in-out;
+    }
+
+    .locked-overlay h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .locked-overlay p {
+      font-size: 14px;
+      color: var(--md-sys-color-outline);
+      max-width: 320px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    @keyframes lockPulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+
+    /* Plan Settings CSS */
+    .plan-card {
+      background-color: var(--md-sys-color-surface);
+      border: 2px solid var(--md-sys-color-surface-variant);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      cursor: pointer;
+      position: relative;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+      border-color: var(--md-sys-color-outline);
+    }
+
+    .plan-card.active-plan {
+      border-color: var(--google-blue);
+      background-color: var(--md-sys-color-primary-container);
+    }
+
+    .plan-card.active-plan .plan-check {
+      display: block !important;
+    }
+
+    .plan-card.disabled-plan {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .plan-card.disabled-plan:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--md-sys-color-surface-variant);
+    }
+
+    /* =========================================
+       GOOGLE LOGIN SCREEN & OAUTH MODAL
+       ========================================= */
+    #google-login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--md-sys-color-background);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity var(--transition-normal) ease-out;
+    }
+
+    .login-card {
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--shadow-2);
+      border: 1px solid var(--md-sys-color-surface-variant);
+      animation: tabFadeIn 0.5s ease-out;
+    }
+
+    .g-signin-btn {
+      background-color: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 24px;
+      color: #3c4043;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      width: 100%;
+      transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+      outline: none;
+    }
+
+    .g-signin-btn:hover {
+      background-color: #f8fafd;
+      border-color: #d2e3fc;
+      box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+    }
+
+    .g-signin-btn:active {
+      background-color: #ecf3fe;
+    }
+
+    /* Google OAuth account picker */
+    .modal-oauth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      animation: tabFadeIn 0.3s ease-out;
+    }
+
+    .modal-oauth-card {
+      background: #ffffff;
+      border-radius: 28px;
+      max-width: 380px;
+      width: 90%;
+      padding: 32px 32px 24px 32px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+      color: #1f1f1f;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .oauth-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .oauth-header h3 {
+      font-size: 22px;
+      font-weight: 400;
+      color: #202124;
+      margin-bottom: 4px;
+    }
+
+    .oauth-account-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s;
+      border-bottom: 1px solid #f1f3f4;
+    }
+
+    .oauth-account-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .oauth-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .oauth-details {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .oauth-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #3c4043;
+    }
+
+    .oauth-email {
+      font-size: 12px;
+      color: #5f6368;
+    }
+
+    .oauth-use-another {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #3c4043;
+      border-radius: 8px;
+      transition: background-color 0.15s;
+    }
+
+    .oauth-use-another:hover {
+      background-color: #f8f9fa;
+    }
+
+    .oauth-footer {
+      font-size: 11px;
+      color: #70757a;
+      margin-top: 24px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .oauth-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #4285F4;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
