@@ -1,5 +1,5 @@
     let socketUrl = '';
-    if (window.location.protocol === 'file:') {
+    if (window.location.protocol === 'file:' || window.location.hostname === 'gubin0425a-creator.github.io') {
       socketUrl = 'http://127.0.0.1:3000';
     } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       if (window.location.port !== '3000') {
